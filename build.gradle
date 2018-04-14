@@ -29,6 +29,8 @@ allprojects {
 ext {
     compileSdkVersion = 27
     buildToolsVersion = "27.0.3"
+    minSdkVersion = 21
+    targetSdkVersion = 27
 
     SUPPORT_LIBRARY_VERSION = '27.1.0'
     RETROFIT_VERSION = '2.3.0'

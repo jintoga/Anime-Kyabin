@@ -9,8 +9,8 @@ android {
 
     defaultConfig {
         applicationId "com.jintoga.animekyabin"
-        minSdkVersion 17
-        targetSdkVersion 27
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -80,12 +80,12 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
 
+    //RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
+
     //Rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
-
-    //RxJava support for Room
-    implementation "android.arch.persistence.room:rxjava2:1.0.0"
 
     // ReactiveStreams support for LiveData
     implementation "android.arch.lifecycle:reactivestreams:1.1.1"
