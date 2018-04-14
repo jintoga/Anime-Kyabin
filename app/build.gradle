@@ -8,7 +8,7 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.example.jintoga.mvvmweatherdemo"
+        applicationId "com.jintoga.animekyabin"
         minSdkVersion 17
         targetSdkVersion 27
         versionCode 1

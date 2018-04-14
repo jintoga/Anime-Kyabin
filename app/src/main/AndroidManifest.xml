@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jintoga.animelist">
+    package="com.jintoga.animekyabin">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AnimeListApplication"
+        android:name="com.jintoga.animekyabin.AnimeListApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.animes.AnimesActivity">
+        <activity android:name="com.jintoga.animekyabin.ui.animes.AnimesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
