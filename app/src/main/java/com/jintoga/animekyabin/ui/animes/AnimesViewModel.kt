@@ -34,7 +34,10 @@ class AnimesViewModel : ViewModel() {
                                 items.clear()
                                 items.addAll(it)
                             },
-                            { isLoadError.set(true) },
+                            {
+                                isLoadError.set(true)
+                                Log.e("E", it.localizedMessage)
+                            },
                             { isLoading.set(false) }
                     )
         }

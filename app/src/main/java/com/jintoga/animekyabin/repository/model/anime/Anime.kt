@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName
 
 @Entity
 data class Anime(
-        @PrimaryKey(autoGenerate = true) var id: Long? = null,
-        @ColumnInfo(name = "iconURL") @SerializedName("iconURL") var iconURL: String?,
-        @ColumnInfo(name = "cur_temp") @SerializedName("cur_temp") var curTemp: Double,
-        @ColumnInfo(name = "dtString") @SerializedName("dtString") var dtString: String?,
-        @ColumnInfo(name = "cityName") @SerializedName("cityName") var cityName: String?
+        @PrimaryKey(autoGenerate = true) var uid: Long? = null,
+        @ColumnInfo(name = "id") @SerializedName("id") var id: Int,
+        @ColumnInfo(name = "title_romaji") @SerializedName("title_romaji") var titleRomaji: String?,
+        @ColumnInfo(name = "title_english") @SerializedName("title_english") var titleEnglish: String?,
+        @ColumnInfo(name = "title_japanese") @SerializedName("title_japanese") var titleJapanese: String?,
+        @ColumnInfo(name = "image_url_lge") @SerializedName("image_url_lge") var imageUrl: String?
 )

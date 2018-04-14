@@ -18,10 +18,8 @@ class RepositoryManager(private val clientApi: ClientApi,
     override fun getAnimesFromDb(): Observable<List<Anime>> =
             database.animeDao().getAll().toObservable()
 
-    override fun getAnimesFromApi(): Observable<List<Anime>> =
-            clientApi.getAnimes(3)
-                    .toList()
-                    .toObservable()
+    override fun getAnimesFromApi(page: Int?): Observable<List<Anime>> =
+            clientApi.getAnimes(page)
                     .doOnNext { saveAnimesToDb(it) }
 
     override fun saveAnimesToDb(animes: List<Anime>) {

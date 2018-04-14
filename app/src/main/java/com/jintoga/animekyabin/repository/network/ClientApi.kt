@@ -17,5 +17,5 @@ interface ClientApi {
             : Observable<ClientCredentials>
 
     @GET("browse/anime")
-    fun getAnimes(@Query("page") page: Int): Observable<Anime>
+    fun getAnimes(@Query("page") page: Int?): Observable<List<Anime>>
 }
