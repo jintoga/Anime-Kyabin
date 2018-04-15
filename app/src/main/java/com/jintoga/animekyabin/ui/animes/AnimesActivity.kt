@@ -1,11 +1,15 @@
 package com.jintoga.animekyabin.ui.animes
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.jintoga.animekyabin.AnimeListApplication
 import com.jintoga.animekyabin.R
+import com.jintoga.animekyabin.repository.model.anime.Anime
+import kotlinx.android.synthetic.main.activity_animes.*
+import org.jetbrains.anko.design.snackbar
 
 
 class AnimesActivity : AppCompatActivity() {
@@ -22,6 +26,10 @@ class AnimesActivity : AppCompatActivity() {
         } else {
             viewModel.getClientCredentials()
         }
+
+        viewModel.animes.observe(this, Observer<List<Anime>> {
+            snackbar(rootView, it.toString())
+        })
     }
 
     private fun obtainViewModel(animesActivity: AnimesActivity): AnimesViewModel {

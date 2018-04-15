@@ -1,9 +1,8 @@
 package com.jintoga.animekyabin.ui.animes
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
-import android.databinding.ObservableList
 import android.util.Log
 import com.jintoga.animekyabin.AnimeListApplication
 import com.jintoga.animekyabin.repository.model.anime.Anime
@@ -16,7 +15,7 @@ class AnimesViewModel : ViewModel() {
 
     val isLoadError = ObservableBoolean(false)
     val isLoading = ObservableBoolean(false)
-    val items: ObservableList<Anime> = ObservableArrayList()
+    val animes: MutableLiveData<List<Anime>> = MutableLiveData()
 
     fun loadAnimes(forceUpdate: Boolean, showLoadingUI: Boolean) {
         if (showLoadingUI) {
@@ -31,8 +30,7 @@ class AnimesViewModel : ViewModel() {
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                             {
-                                items.clear()
-                                items.addAll(it)
+                                animes.value = it
                             },
                             {
                                 isLoadError.set(true)
