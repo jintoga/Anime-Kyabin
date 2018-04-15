@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.jintoga.animekyabin.AnimeListApplication
+import com.jintoga.animekyabin.AKApp
 import com.jintoga.animekyabin.R
+import com.jintoga.animekyabin.helper.applyToolbarMarginTop
 import com.jintoga.animekyabin.repository.model.anime.Anime
 import kotlinx.android.synthetic.main.activity_animes.*
+import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.design.snackbar
 
 
@@ -20,8 +22,11 @@ class AnimesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_animes)
 
+        setSupportActionBar(toolbar)
+        applyToolbarMarginTop(toolbar)
+
         viewModel = obtainViewModel(this)
-        if (AnimeListApplication.appComponent.authManager().getToken() != null) {
+        if (AKApp.appComponent.authManager().getToken() != null) {
             viewModel.loadAnimes(true, true)
         } else {
             viewModel.getClientCredentials()

@@ -4,11 +4,36 @@
     <style name="AnimeKyabin" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/secondary</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
-        <item name="android:colorBackground">@color/primary</item>
+        <item name="android:colorBackground">@color/background_dark</item>
         <item name="android:textColor">@color/text_primary</item>
+        <item name="android:actionBarStyle">@style/AnimeKyabin.Toolbar</item>
+        <item name="android:toolbarStyle">@style/AnimeKyabin.Toolbar</item>
+    </style>
+
+    <style name="AnimeKyabin.Translucent">
+        <item name="android:statusBarColor">@color/immersive_bars</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:navigationBarColor">@color/immersive_bars</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+    </style>
+
+    <style name="AnimeKyabin.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/background_dark</item>
+        <item name="colorPrimaryDark">@color/background_dark</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>
 
 </resources>

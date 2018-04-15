@@ -12,12 +12,12 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(
-        ApplicationModule::class,
+        AppModule::class,
         NetworkModule::class)
 )
-interface ApplicationComponent {
+interface AppComponent {
 
-    fun inject(weatherApplication: AnimeListApplication)
+    fun inject(weatherApplication: AKApp)
 
     fun context(): Context
 

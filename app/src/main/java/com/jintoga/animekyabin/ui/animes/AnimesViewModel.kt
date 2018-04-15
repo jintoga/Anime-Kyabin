@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.util.Log
-import com.jintoga.animekyabin.AnimeListApplication
+import com.jintoga.animekyabin.AKApp
 import com.jintoga.animekyabin.repository.model.anime.Anime
 import com.jintoga.animekyabin.repository.model.auth.ClientCredentialsRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +22,7 @@ class AnimesViewModel : ViewModel() {
             isLoading.set(true)
         }
         if (forceUpdate) {
-            AnimeListApplication
+            AKApp
                     .appComponent
                     .repository()
                     .getAnimes()
@@ -47,7 +47,7 @@ class AnimesViewModel : ViewModel() {
                 clientId = "jintoga-vfgpk",
                 clientSecret = "WdKuseLjVIQ9Q5Ubj1Ks96mViiisn"
         )
-        AnimeListApplication
+        AKApp
                 .appComponent
                 .authManager()
                 .grantClientCredentials(request)

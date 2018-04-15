@@ -3,10 +3,10 @@ package com.jintoga.animekyabin
 import android.app.Application
 import android.content.Context
 
-class AnimeListApplication : Application() {
+class AKApp : Application() {
 
     companion object {
-        lateinit var appComponent: ApplicationComponent
+        lateinit var appComponent: AppComponent
     }
 
     operator fun get(context: Context): Application =
@@ -14,8 +14,8 @@ class AnimeListApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
+        appComponent = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
                 .build()
         appComponent.inject(this)
     }
