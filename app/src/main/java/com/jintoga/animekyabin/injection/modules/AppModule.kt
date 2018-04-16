@@ -1,6 +1,7 @@
-package com.jintoga.animekyabin
+package com.jintoga.animekyabin.injection.modules
 
 import android.content.Context
+import com.jintoga.animekyabin.AKApp
 import com.jintoga.animekyabin.auth.AuthManager
 import com.jintoga.animekyabin.auth.DefaultAuthManagerManager
 import com.jintoga.animekyabin.auth.PreferenceHelper

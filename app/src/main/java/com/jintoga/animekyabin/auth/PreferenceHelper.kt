@@ -9,9 +9,10 @@ import javax.inject.Singleton
 @Singleton
 class PreferenceHelper @Inject constructor(context: Context) {
 
-    private val PREF_FILE_NAME = "AnimeListSharedPreference"
-
-    private val AUTH_TOKEN = "AUTH_TOKEN"
+    companion object {
+        private const val PREF_FILE_NAME = "AnimeListSharedPreference"
+        private const val AUTH_TOKEN = "AUTH_TOKEN"
+    }
 
     private var preferences: SharedPreferences
 

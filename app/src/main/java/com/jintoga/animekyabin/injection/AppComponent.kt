@@ -1,23 +1,24 @@
-package com.jintoga.animekyabin
+package com.jintoga.animekyabin.injection
 
 import android.content.Context
 import com.jintoga.animekyabin.auth.AuthManager
 import com.jintoga.animekyabin.auth.PreferenceHelper
+import com.jintoga.animekyabin.injection.modules.AppModule
+import com.jintoga.animekyabin.injection.modules.NetworkModule
+import com.jintoga.animekyabin.injection.modules.ViewModelModule
 import com.jintoga.animekyabin.repository.Repository
 import com.jintoga.animekyabin.repository.db.AppDatabase
 import com.jintoga.animekyabin.repository.network.ClientApi
-import com.jintoga.animekyabin.repository.network.NetworkModule
+import com.jintoga.animekyabin.repository.network.XTokenInterceptor
+import com.jintoga.animekyabin.ui.animes.AnimesActivity
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(
-        AppModule::class,
-        NetworkModule::class)
-)
+@Component(modules = [(AppModule::class), (NetworkModule::class), (ViewModelModule::class)])
 interface AppComponent {
 
-    fun inject(weatherApplication: AKApp)
+    fun inject(activity: AnimesActivity)
 
     fun context(): Context
 
@@ -30,4 +31,6 @@ interface AppComponent {
     fun preferenceHelper(): PreferenceHelper
 
     fun authManager(): AuthManager
+
+    fun tokenInterceptor(): XTokenInterceptor
 }

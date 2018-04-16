@@ -1,16 +1,24 @@
 package com.jintoga.animekyabin.repository.network
 
-import com.jintoga.animekyabin.AKApp
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class XTokenInterceptor : Interceptor {
+@Singleton
+class XTokenInterceptor @Inject constructor() : Interceptor {
+
+    private var authToken: String? = null
+
+    fun setToken(token: String) {
+        this.authToken = token
+    }
 
     override fun intercept(chain: Interceptor.Chain?): Response {
         val request = chain?.request()
         val builder = request?.newBuilder()
         builder?.addHeader("Content-Type", "application/x-www-form-urlencoded")
-        val authToken = AKApp.appComponent.authManager().getToken()
+        val authToken = authToken
         if (authToken != null && authToken.isNotEmpty()) {
             builder?.addHeader("Authorization", "Bearer $authToken")
         }

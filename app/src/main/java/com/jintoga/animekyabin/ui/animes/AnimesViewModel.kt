@@ -4,15 +4,20 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.util.Log
-import com.jintoga.animekyabin.AKApp
+import com.jintoga.animekyabin.auth.AuthManager
+import com.jintoga.animekyabin.repository.Repository
 import com.jintoga.animekyabin.repository.model.anime.Anime
 import com.jintoga.animekyabin.repository.model.auth.ClientCredentialsRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 
-class AnimesViewModel : ViewModel() {
+class AnimesViewModel @Inject constructor(private val repository: Repository,
+                                          private val authManager: AuthManager)
+    : ViewModel() {
 
+    val isEmpty = ObservableBoolean(false)
     val isLoadError = ObservableBoolean(false)
     val isLoading = ObservableBoolean(false)
     val animes: MutableLiveData<List<Anime>> = MutableLiveData()
@@ -22,15 +27,15 @@ class AnimesViewModel : ViewModel() {
             isLoading.set(true)
         }
         if (forceUpdate) {
-            AKApp
-                    .appComponent
-                    .repository()
-                    .getAnimes()
+            repository.getAnimes()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                             {
                                 animes.value = it
+                                with(animes) {
+                                    isEmpty.set(it.isEmpty())
+                                }
                             },
                             {
                                 isLoadError.set(true)
@@ -47,9 +52,7 @@ class AnimesViewModel : ViewModel() {
                 clientId = "jintoga-vfgpk",
                 clientSecret = "WdKuseLjVIQ9Q5Ubj1Ks96mViiisn"
         )
-        AKApp
-                .appComponent
-                .authManager()
+        authManager
                 .grantClientCredentials(request)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

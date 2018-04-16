@@ -1,8 +1,10 @@
-package com.jintoga.animekyabin.repository.network
+package com.jintoga.animekyabin.injection.modules
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jintoga.animekyabin.BuildConfig
+import com.jintoga.animekyabin.repository.network.ClientApi
+import com.jintoga.animekyabin.repository.network.XTokenInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
