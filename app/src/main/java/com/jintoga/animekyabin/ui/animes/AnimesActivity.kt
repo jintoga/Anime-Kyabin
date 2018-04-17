@@ -33,16 +33,10 @@ class AnimesActivity : AppCompatActivity() {
         toolbar.applyMarginTop()
 
         viewDataBinding.viewModel = getViewModel(viewModelFactory)
-        val viewModel = viewDataBinding.viewModel!!
-        val token = appComponent.authManager().getToken()
-        if (token != null) {
-            appComponent.tokenInterceptor().setToken(token)
-            viewModel.loadAnimes(true, true)
-        } else {
-            viewModel.getClientCredentials()
-        }
 
-        viewModel.animes.observe(this, Observer<List<Anime>> {
+        viewDataBinding.viewModel?.loadAnimes(true, true)
+
+        viewDataBinding.viewModel?.animes?.observe(this, Observer<List<Anime>> {
             snackbar(rootView, it.toString())
         })
     }

@@ -16,6 +16,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "ENDPOINT", "\"https://anilist.co/api/\""
+        buildConfigField "String", "GRANT_TYPE", "\"client_credentials\""
+        buildConfigField "String", "CLIENT_ID", "\"jintoga-vfgpk\""
+        buildConfigField "String", "CLIENT_SERCRET", "\"WdKuseLjVIQ9Q5Ubj1Ks96mViiisn\""
     }
 
     dataBinding {

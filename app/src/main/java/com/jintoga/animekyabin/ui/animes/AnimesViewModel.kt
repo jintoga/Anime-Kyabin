@@ -4,10 +4,13 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.util.Log
+import com.jintoga.animekyabin.BuildConfig
 import com.jintoga.animekyabin.auth.AuthManager
 import com.jintoga.animekyabin.repository.Repository
 import com.jintoga.animekyabin.repository.model.anime.Anime
+import com.jintoga.animekyabin.repository.model.auth.ClientCredentials
 import com.jintoga.animekyabin.repository.model.auth.ClientCredentialsRequest
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -27,7 +30,7 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
             isLoading.set(true)
         }
         if (forceUpdate) {
-            repository.getAnimes()
+            getLoadAnimesObservable()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(
@@ -46,22 +49,20 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
         }
     }
 
-    fun getClientCredentials() {
-        val request = ClientCredentialsRequest(
-                grantType = "client_credentials",
-                clientId = "jintoga-vfgpk",
-                clientSecret = "WdKuseLjVIQ9Q5Ubj1Ks96mViiisn"
-        )
-        authManager
-                .grantClientCredentials(request)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        {
-                            Log.d("CC", it.accessToken)
-                        },
-                        { isLoadError.set(true) },
-                        { isLoading.set(false) }
-                )
+    private fun getLoadAnimesObservable(): Observable<List<Anime>> {
+        if (authManager.isTokenActive) return loadAnimesObservable()
+        else return grantClientCredentials().flatMap { return@flatMap loadAnimesObservable() }
     }
+
+    private fun loadAnimesObservable(): Observable<List<Anime>> {
+        authManager.setTokenToInterceptor()
+        return repository.getAnimes()
+    }
+
+    private fun grantClientCredentials(): Observable<ClientCredentials> =
+            authManager.grantClientCredentials(ClientCredentialsRequest(
+                    grantType = BuildConfig.GRANT_TYPE,
+                    clientId = BuildConfig.CLIENT_ID,
+                    clientSecret = BuildConfig.CLIENT_SERCRET
+            ))
 }

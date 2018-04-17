@@ -9,6 +9,7 @@ import com.jintoga.animekyabin.repository.Repository
 import com.jintoga.animekyabin.repository.RepositoryManager
 import com.jintoga.animekyabin.repository.db.AppDatabase
 import com.jintoga.animekyabin.repository.network.ClientApi
+import com.jintoga.animekyabin.repository.network.XTokenInterceptor
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -34,6 +35,8 @@ class AppModule(private val application: AKApp) {
 
     @Provides
     @Singleton
-    fun provideAuthManager(clientApi: ClientApi, preferenceHelper: PreferenceHelper)
-            : AuthManager = DefaultAuthManagerManager(clientApi, preferenceHelper)
+    fun provideAuthManager(clientApi: ClientApi,
+                           preferenceHelper: PreferenceHelper,
+                           xTokenInterceptor: XTokenInterceptor)
+            : AuthManager = DefaultAuthManagerManager(clientApi, preferenceHelper, xTokenInterceptor)
 }
