@@ -22,10 +22,6 @@ class PreferenceHelper @Inject constructor(context: Context) {
         preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
     }
 
-    fun clear() {
-        preferences.edit().clear().apply()
-    }
-
     fun getAuthToken(): String? = preferences.getString(AUTH_TOKEN, null)
 
     fun getExpireTime(): Long = preferences.getLong(EXPIRES_TIME, -1L)
