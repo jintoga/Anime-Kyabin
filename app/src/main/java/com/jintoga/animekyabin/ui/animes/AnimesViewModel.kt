@@ -3,7 +3,6 @@ package com.jintoga.animekyabin.ui.animes
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
-import android.util.Log
 import com.jintoga.animekyabin.BuildConfig
 import com.jintoga.animekyabin.auth.AuthManager
 import com.jintoga.animekyabin.repository.Repository
@@ -22,6 +21,7 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
 
     val isEmpty = ObservableBoolean(false)
     val isLoadError = ObservableBoolean(false)
+    val snackbarMessage = MutableLiveData<String>()
     val isLoading = ObservableBoolean(false)
     val animes: MutableLiveData<List<Anime>> = MutableLiveData()
 
@@ -42,7 +42,7 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
                             },
                             {
                                 isLoadError.set(true)
-                                Log.e("E", it.localizedMessage)
+                                snackbarMessage.value = it.localizedMessage
                             },
                             { isLoading.set(false) }
                     )

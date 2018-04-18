@@ -39,8 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.isLoadError ? View.GONE : View.VISIBLE}"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:refreshing="@{viewModel.isLoading}">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/animesRecyclerView"
@@ -60,6 +59,16 @@
             android:layout_gravity="center"
             android:text="EMPTY"
             android:visibility="@{viewModel.isEmpty ? View.VISIBLE : View.GONE}" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="?android:colorAccent"
+            android:indeterminateTintMode="src_in"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
