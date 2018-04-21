@@ -12,4 +12,5 @@
     <color name="background_dark">#263238</color>
 
     <color name="immersive_bars">#99000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

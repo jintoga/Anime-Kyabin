@@ -23,7 +23,7 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
     val isLoadError = ObservableBoolean(false)
     val snackbarMessage = MutableLiveData<String>()
     val isLoading = ObservableBoolean(false)
-    val animes: MutableLiveData<List<Anime>> = MutableLiveData()
+    val animes = MutableLiveData<List<Anime>>()
 
     fun loadAnimes(forceUpdate: Boolean, showLoadingUI: Boolean) {
         if (showLoadingUI) {
@@ -41,10 +41,13 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
                                 }
                             },
                             {
+                                isLoading.set(false)
                                 isLoadError.set(true)
                                 snackbarMessage.value = it.localizedMessage
                             },
-                            { isLoading.set(false) }
+                            {
+                                isLoading.set(false)
+                            }
                     )
         }
     }

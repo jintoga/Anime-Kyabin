@@ -7,6 +7,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.jintoga.animekyabin.AKApp
 import com.jintoga.animekyabin.injection.AppComponent
@@ -32,3 +34,8 @@ private fun Context.getStatusBarHeight(): Int {
 inline fun <reified T : ViewModel> AppCompatActivity.getViewModel(viewModelFactory: ViewModelProvider.Factory): T {
     return ViewModelProviders.of(this, viewModelFactory)[T::class.java]
 }
+
+val ViewGroup.inflater: LayoutInflater get() = LayoutInflater.from(context)
+
+fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
+        inflater.inflate(layoutId, this, attachToRoot)
