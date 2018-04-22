@@ -13,7 +13,7 @@ class RepositoryManager(private val clientApi: ClientApi,
     override fun getAnimes(): Observable<List<Anime>> =
             Observable.concatArray(
                     getAnimesFromDb(),
-                    getAnimesFromApi().delaySubscription(1500L, TimeUnit.MILLISECONDS)
+                    getAnimesFromApi().delaySubscription(1200L, TimeUnit.MILLISECONDS)
             )
 
     override fun getAnimesFromDb(): Observable<List<Anime>> =
