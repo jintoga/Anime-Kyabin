@@ -9,12 +9,6 @@ import io.reactivex.Observable
 class RepositoryManager(private val clientApi: ClientApi,
                         private val database: AppDatabase) : Repository {
 
-    override fun getAnimes(): Observable<List<Anime>> =
-            Observable.concatArray(
-                    getAnimesFromDb(),
-                    getAnimesFromApi()
-            )
-
     override fun getAnimesFromDb(): Observable<List<Anime>> =
             database.animeDao().getAll().toObservable()
 

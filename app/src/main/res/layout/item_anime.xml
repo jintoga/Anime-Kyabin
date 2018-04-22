@@ -23,12 +23,12 @@
             android:layout_height="wrap_content"
             app:actualImageScaleType="focusCrop"
             app:actualImageUri="@{anime.imageUrl}"
+            app:fadeDuration="800"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="0.7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderImage="@color/divider"
+            app:placeholderImage="@color/immersive_bars"
             app:placeholderImageScaleType="focusCrop"
             app:viewAspectRatio="0.7" />
 

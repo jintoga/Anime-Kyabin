@@ -3,15 +3,27 @@ package com.jintoga.animekyabin.ui.animes.adapters
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.jintoga.animekyabin.R
 import com.jintoga.animekyabin.databinding.ItemAnimeBinding
 import com.jintoga.animekyabin.helper.inflater
 import com.jintoga.animekyabin.repository.model.anime.Anime
 import com.jintoga.animekyabin.ui.animes.AnimesViewModel
+import com.jintoga.animekyabin.ui.widget.GridRecyclerView
 
 
-class AnimesAdapter(viewModel: AnimesViewModel)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AnimesAdapter(viewModel: AnimesViewModel, private val animesRecyclerView: GridRecyclerView)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Animation.AnimationListener {
+
+    override fun onAnimationRepeat(animation: Animation?) {
+    }
+
+    override fun onAnimationEnd(animation: Animation?) {
+    }
+
+    override fun onAnimationStart(animation: Animation?) {
+    }
 
     companion object {
         private const val VIEW_TYPE_LOADING = 1
@@ -20,6 +32,7 @@ class AnimesAdapter(viewModel: AnimesViewModel)
 
     private val animes = ArrayList<Anime>()
     private var isLoading = false
+    private var isAnimationPlaying = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding: ItemAnimeBinding
@@ -53,9 +66,25 @@ class AnimesAdapter(viewModel: AnimesViewModel)
     }
 
     fun setAnimes(animes: List<Anime>) {
-        this.animes.clear()
+        if (this.animes.isNotEmpty()) {
+            this.animes.clear()
+            notifyDataSetChanged()
+        }
         this.animes.addAll(animes)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, itemCount)
+        if (!isAnimationPlaying) {
+            runLayoutAnimation(animesRecyclerView)
+        }
+    }
+
+    private fun runLayoutAnimation(recyclerView: RecyclerView) {
+        isAnimationPlaying = true
+        val context = recyclerView.context
+        val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation_from_bottom)
+        recyclerView.layoutAnimationListener = this
+        recyclerView.layoutAnimation = controller
+        recyclerView.adapter.notifyDataSetChanged()
+        recyclerView.scheduleLayoutAnimation()
     }
 
     //ToDo: data binding?

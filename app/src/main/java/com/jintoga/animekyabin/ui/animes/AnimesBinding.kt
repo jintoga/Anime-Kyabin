@@ -12,9 +12,9 @@ import com.jintoga.animekyabin.ui.animes.adapters.AnimesAdapter
 object AnimesBinding {
     @BindingAdapter("app:animes")
     @JvmStatic
-    fun setAnimes(recyclerView: RecyclerView, animes: List<Anime>?) {
+    fun setAnimes(recyclerView: RecyclerView, animes: List<Anime>) {
         with(recyclerView.adapter as AnimesAdapter) {
-            animes?.let {
+            if (animes.isNotEmpty()) {
                 setAnimes(animes)
             }
         }

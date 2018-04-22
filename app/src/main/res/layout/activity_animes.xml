@@ -28,9 +28,12 @@
             android:elevation="0dp"
             app:elevation="0dp">
 
-            <include
-                layout="@layout/toolbar"
-                app:layout_collapseMode="pin" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AnimeKyabin.Toolbar"
+                app:layout_scrollFlags="scroll|enterAlways|snap" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -41,14 +44,15 @@
             android:visibility="@{viewModel.isLoadError ? View.GONE : View.VISIBLE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.RecyclerView
+            <com.jintoga.animekyabin.ui.widget.GridRecyclerView
                 android:id="@+id/animesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:scrollbarStyle="outsideOverlay"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                app:animes="@{viewModel.animes}" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

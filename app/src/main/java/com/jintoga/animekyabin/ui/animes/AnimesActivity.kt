@@ -4,8 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import android.widget.TextView
 import com.github.florent37.viewanimator.ViewAnimator
 import com.jintoga.animekyabin.R
@@ -15,12 +17,15 @@ import com.jintoga.animekyabin.helper.applyMarginTop
 import com.jintoga.animekyabin.helper.getViewModel
 import com.jintoga.animekyabin.ui.animes.adapters.AnimesAdapter
 import kotlinx.android.synthetic.main.activity_animes.*
-import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject
 
 
 class AnimesActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TITLE_ANIMATION_DURATION = 900L
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,8 +42,9 @@ class AnimesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.applyMarginTop()
 
-        if (savedInstanceState == null) {
-            animateToolbar()
+        if (!resources.getBoolean(R.bool.isLandscape)) {
+            //Translucent bottom navigation for Portrait mode only
+            rootView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
 
         viewModel = getViewModel(viewModelFactory)
@@ -46,23 +52,28 @@ class AnimesActivity : AppCompatActivity() {
 
         init()
 
-        viewModel.loadAnimes(true, true)
+        if (savedInstanceState == null) {
+            animateToolbar()
+        }
 
         viewModel.snackbarMessage.observe(this, Observer {
             snackbar(rootView, it!!)
         })
 
-        viewModel.animes.observe(this, Observer {
-            it?.let {
-                adapter.setAnimes(it)
-            }
-        })
+        Handler().postDelayed({
+            val layoutAnimationDuration = resources.getInteger(R.integer.layout_animation_duration).toLong()
+            viewModel.loadAnimes(true, true, layoutAnimationDuration)
+        }, TITLE_ANIMATION_DURATION)
     }
 
     private fun init() {
-        animesRecyclerView.setHasFixedSize(true)
+        initRecyclerView()
+        //Other inits
+    }
+
+    private fun initRecyclerView() {
         animesRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        adapter = AnimesAdapter(viewModel)
+        adapter = AnimesAdapter(viewModel, animesRecyclerView)
         animesRecyclerView.adapter = adapter
     }
 
@@ -73,7 +84,7 @@ class AnimesActivity : AppCompatActivity() {
             ViewAnimator
                     .animate(t)
                     .fadeIn()
-                    .duration(900)
+                    .duration(TITLE_ANIMATION_DURATION)
                     .start()
         }
     }
