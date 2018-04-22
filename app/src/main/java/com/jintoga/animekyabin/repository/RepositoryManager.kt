@@ -4,10 +4,17 @@ import com.jintoga.animekyabin.repository.db.AppDatabase
 import com.jintoga.animekyabin.repository.model.anime.Anime
 import com.jintoga.animekyabin.repository.network.ClientApi
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
 
 class RepositoryManager(private val clientApi: ClientApi,
                         private val database: AppDatabase) : Repository {
+
+    override fun getAnimes(): Observable<List<Anime>> =
+            Observable.concatArray(
+                    getAnimesFromDb(),
+                    getAnimesFromApi().delaySubscription(1500L, TimeUnit.MILLISECONDS)
+            )
 
     override fun getAnimesFromDb(): Observable<List<Anime>> =
             database.animeDao().getAll().toObservable()

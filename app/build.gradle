@@ -96,7 +96,8 @@ dependencies {
     //Animation
     implementation 'com.github.florent37:viewanimator:1.0.5'
 
-    //Fresco
-    implementation "com.facebook.fresco:fresco:$FRESCO_VERSION"
-    implementation "com.facebook.fresco:imagepipeline-okhttp3:$FRESCO_VERSION"
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$GLIDE_VERSION"
+    annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_VERSION"
+
 }

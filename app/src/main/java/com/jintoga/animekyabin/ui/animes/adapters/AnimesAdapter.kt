@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import com.jintoga.animekyabin.R
 import com.jintoga.animekyabin.databinding.ItemAnimeBinding
 import com.jintoga.animekyabin.helper.inflater
@@ -32,7 +31,6 @@ class AnimesAdapter(viewModel: AnimesViewModel, private val animesRecyclerView: 
 
     private val animes = ArrayList<Anime>()
     private var isLoading = false
-    private var isAnimationPlaying = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding: ItemAnimeBinding
@@ -65,26 +63,27 @@ class AnimesAdapter(viewModel: AnimesViewModel, private val animesRecyclerView: 
         }
     }
 
-    fun setAnimes(animes: List<Anime>) {
+    fun setAnimes(data: List<Anime>) {
         if (this.animes.isNotEmpty()) {
+            //There are probably already loaded items with FadedIn animation(hasFadedIn),
+            // so set hasFadedIn back to "updated" items to prevent animation from repeating
+            persistFadeState(data)
             this.animes.clear()
             notifyDataSetChanged()
         }
-        this.animes.addAll(animes)
+        this.animes.addAll(data)
         notifyItemRangeInserted(0, itemCount)
-        if (!isAnimationPlaying) {
-            runLayoutAnimation(animesRecyclerView)
-        }
     }
 
-    private fun runLayoutAnimation(recyclerView: RecyclerView) {
-        isAnimationPlaying = true
-        val context = recyclerView.context
-        val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.grid_layout_animation_from_bottom)
-        recyclerView.layoutAnimationListener = this
-        recyclerView.layoutAnimation = controller
-        recyclerView.adapter.notifyDataSetChanged()
-        recyclerView.scheduleLayoutAnimation()
+    private fun persistFadeState(data: List<Anime>) {
+        this.animes.forEach loop@{ currentItem ->
+            data.forEach { newItem ->
+                if (currentItem.id == newItem.id) {
+                    newItem.hasFadedIn = currentItem.hasFadedIn
+                    return@loop
+                }
+            }
+        }
     }
 
     //ToDo: data binding?

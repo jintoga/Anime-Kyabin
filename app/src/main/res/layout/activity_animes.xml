@@ -20,22 +20,6 @@
         android:layout_height="match_parent"
         tools:context="com.jintoga.animekyabin.ui.animes.AnimesActivity">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:elevation="0dp"
-            app:elevation="0dp">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/AnimeKyabin.Toolbar"
-                app:layout_scrollFlags="scroll|enterAlways|snap" />
-
-        </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeToRefreshLayout"
@@ -54,6 +38,24 @@
                 app:animes="@{viewModel.animes}" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:elevation="0dp"
+            app:elevation="0dp"
+            app:layout_behavior="com.jintoga.animekyabin.ui.widget.FlingBehavior">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AnimeKyabin.Toolbar"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+        </android.support.design.widget.AppBarLayout>
 
         <TextView
             android:id="@+id/empty"

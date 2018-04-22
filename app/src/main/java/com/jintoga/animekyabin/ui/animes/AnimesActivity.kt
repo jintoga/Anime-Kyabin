@@ -61,8 +61,7 @@ class AnimesActivity : AppCompatActivity() {
         })
 
         Handler().postDelayed({
-            val layoutAnimationDuration = resources.getInteger(R.integer.layout_animation_duration).toLong()
-            viewModel.loadAnimes(true, true, 2 * layoutAnimationDuration)
+            viewModel.loadAnimes(true, true)
         }, TITLE_ANIMATION_DURATION)
     }
 

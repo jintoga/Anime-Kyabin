@@ -13,7 +13,6 @@ import com.jintoga.animekyabin.repository.model.auth.ClientCredentialsRequest
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -28,13 +27,12 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
     val animes = ObservableArrayList<Anime>()
 
     fun loadAnimes(forceUpdate: Boolean,
-                   showLoadingUI: Boolean,
-                   delayLoadFromApi: Long) {
+                   showLoadingUI: Boolean) {
         if (showLoadingUI) {
             isLoading.set(true)
         }
         if (forceUpdate) {
-            getLoadAnimesObservable(delayLoadFromApi)
+            getLoadAnimesObservable()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(
@@ -55,18 +53,14 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
         }
     }
 
-    private fun getLoadAnimesObservable(delayLoadFromApi: Long): Observable<List<Anime>> {
-        if (authManager.isTokenActive) return loadAnimesObservable(delayLoadFromApi)
-        else return grantClientCredentials().flatMap { return@flatMap loadAnimesObservable(delayLoadFromApi) }
+    private fun getLoadAnimesObservable(): Observable<List<Anime>> {
+        if (authManager.isTokenActive) return loadAnimesObservable()
+        else return grantClientCredentials().flatMap { return@flatMap loadAnimesObservable() }
     }
 
-    private fun loadAnimesObservable(delayLoadFromApi: Long): Observable<List<Anime>> {
+    private fun loadAnimesObservable(): Observable<List<Anime>> {
         authManager.setTokenToInterceptor()
-        return Observable.concatArray(
-                repository.getAnimesFromDb(),
-                repository.getAnimesFromApi()
-                        .delaySubscription(delayLoadFromApi, TimeUnit.MILLISECONDS)
-        )
+        return repository.getAnimes()
     }
 
     private fun grantClientCredentials(): Observable<ClientCredentials> =

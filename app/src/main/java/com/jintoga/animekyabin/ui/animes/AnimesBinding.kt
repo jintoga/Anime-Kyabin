@@ -2,7 +2,6 @@ package com.jintoga.animekyabin.ui.animes
 
 import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.jintoga.animekyabin.repository.model.anime.Anime
 import com.jintoga.animekyabin.ui.animes.adapters.AnimesAdapter
 
@@ -18,11 +17,5 @@ object AnimesBinding {
                 setAnimes(animes)
             }
         }
-    }
-
-    @BindingAdapter("app:actualImageUri")
-    @JvmStatic
-    fun setActualImageUri(simpleDraweeView: SimpleDraweeView, imageUrl: String) {
-        simpleDraweeView.setImageURI(imageUrl)
     }
 }
