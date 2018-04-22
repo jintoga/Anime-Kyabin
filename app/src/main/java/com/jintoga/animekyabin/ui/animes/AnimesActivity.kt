@@ -62,7 +62,7 @@ class AnimesActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             val layoutAnimationDuration = resources.getInteger(R.integer.layout_animation_duration).toLong()
-            viewModel.loadAnimes(true, true, layoutAnimationDuration)
+            viewModel.loadAnimes(true, true, 2 * layoutAnimationDuration)
         }, TITLE_ANIMATION_DURATION)
     }
 
@@ -72,6 +72,7 @@ class AnimesActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
+        animesRecyclerView.setHasFixedSize(true)
         animesRecyclerView.layoutManager = GridLayoutManager(this, 3)
         adapter = AnimesAdapter(viewModel, animesRecyclerView)
         animesRecyclerView.adapter = adapter

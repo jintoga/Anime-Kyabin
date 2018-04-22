@@ -41,7 +41,6 @@
             android:id="@+id/swipeToRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.isLoadError ? View.GONE : View.VISIBLE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.jintoga.animekyabin.ui.widget.GridRecyclerView
