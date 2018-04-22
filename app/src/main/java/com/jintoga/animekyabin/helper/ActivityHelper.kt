@@ -6,8 +6,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +16,7 @@ val Activity.app: AKApp get() = application as AKApp
 
 val AppCompatActivity.appComponent: AppComponent get() = app.appComponent
 
-fun Toolbar.applyMarginTop() {
+fun View.applyMarginTop() {
     (this.layoutParams as ViewGroup.MarginLayoutParams).topMargin = context.getStatusBarHeight()
 }
 
@@ -31,10 +29,11 @@ fun Context.getStatusBarHeight(): Int {
     return result
 }
 
-fun Context.getActionBarHeight(): Int {
-    val value = TypedValue()
-    theme.resolveAttribute(android.R.attr.actionBarSize, value, true)
-    return TypedValue.complexToDimensionPixelSize(value.data, resources.displayMetrics)
+fun Context.getNavigationBarHeight(): Int {
+    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    return if (resourceId > 0) {
+        resources.getDimensionPixelSize(resourceId)
+    } else 0
 }
 
 

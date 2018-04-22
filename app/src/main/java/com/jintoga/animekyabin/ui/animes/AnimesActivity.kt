@@ -14,6 +14,7 @@ import com.jintoga.animekyabin.R
 import com.jintoga.animekyabin.databinding.ActivityAnimesBinding
 import com.jintoga.animekyabin.helper.appComponent
 import com.jintoga.animekyabin.helper.applyMarginTop
+import com.jintoga.animekyabin.helper.getNavigationBarHeight
 import com.jintoga.animekyabin.helper.getViewModel
 import com.jintoga.animekyabin.ui.animes.adapters.AnimesAdapter
 import kotlinx.android.synthetic.main.activity_animes.*
@@ -45,6 +46,11 @@ class AnimesActivity : AppCompatActivity() {
         if (!resources.getBoolean(R.bool.isLandscape)) {
             //Translucent bottom navigation for Portrait mode only
             rootView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            animesRecyclerView.setPadding(
+                    animesRecyclerView.left,
+                    animesRecyclerView.top,
+                    animesRecyclerView.right,
+                    getNavigationBarHeight())
         }
 
         viewModel = getViewModel(viewModelFactory)
