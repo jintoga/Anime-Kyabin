@@ -37,17 +37,25 @@ class AnimesViewModel @Inject constructor(private val repository: Repository,
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                             {
-                                isLoading.set(false)
                                 animes.clear()
                                 animes.addAll(it)
-                                with(animes) {
-                                    isEmpty.set(it.isEmpty())
+                                //If items are loaded (probably from DB)
+                                //then prematurely set isLoading to false to hide ProgressBar
+                                //Otherwise it will still be set to false onComplete later
+                                if (animes.isNotEmpty()) {
+                                    isLoading.set(false)
                                 }
                             },
                             {
                                 isLoading.set(false)
                                 isLoadError.set(true)
                                 snackbarMessage.value = it.localizedMessage
+                            },
+                            {
+                                isLoading.set(false)
+                                with(animes) {
+                                    isEmpty.set(animes.isEmpty())
+                                }
                             }
                     )
         }

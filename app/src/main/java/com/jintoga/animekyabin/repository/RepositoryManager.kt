@@ -10,11 +10,14 @@ import java.util.concurrent.TimeUnit
 class RepositoryManager(private val clientApi: ClientApi,
                         private val database: AppDatabase) : Repository {
 
-    override fun getAnimes(): Observable<List<Anime>> =
-            Observable.concatArray(
-                    getAnimesFromDb(),
-                    getAnimesFromApi().delaySubscription(1200L, TimeUnit.MILLISECONDS)
-            )
+    override fun getAnimes(): Observable<List<Anime>> {
+        val sources =
+                mutableListOf<Observable<List<Anime>>>(
+                        getAnimesFromDb(),
+                        getAnimesFromApi().delaySubscription(1200L, TimeUnit.MILLISECONDS)
+                )
+        return Observable.concatDelayError(sources)
+    }
 
     override fun getAnimesFromDb(): Observable<List<Anime>> =
             database.animeDao().getAll().toObservable()

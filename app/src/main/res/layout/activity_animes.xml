@@ -21,11 +21,13 @@
         tools:context="com.jintoga.animekyabin.ui.animes.AnimesActivity">
 
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <in.srain.cube.views.ptr.PtrFrameLayout
             android:id="@+id/swipeToRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:visibility="visible">
 
             <com.jintoga.animekyabin.ui.widget.GridRecyclerView
                 android:id="@+id/animesRecyclerView"
@@ -37,7 +39,7 @@
                 android:scrollbars="vertical"
                 app:animes="@{viewModel.animes}" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </in.srain.cube.views.ptr.PtrFrameLayout>
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -52,8 +54,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:theme="@style/AnimeKyabin.Toolbar"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                android:theme="@style/AnimeKyabin.Toolbar" />
 
         </android.support.design.widget.AppBarLayout>
 

@@ -100,4 +100,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$GLIDE_VERSION"
     annotationProcessor "com.github.bumptech.glide:compiler:$GLIDE_VERSION"
 
+    //Custom pull to refresh layout
+    implementation 'in.srain.cube:ultra-ptr:1.0.11'
 }
